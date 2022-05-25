@@ -33,7 +33,7 @@ app.get('/try-qs', (req, res) => {
     // output.urlParts = url.parse("http://localhost:3000/try-qs?a=12&b=bill", true);
     res.json(output);
 });
-// 把urlencodedParser當Middleware
+// 把urlencodedParser當Middleware,為專屬這個route的，先經過他的處理才進去
 app.post('/try-post', urlencodedParser, (req, res) => {
     res.json(req.body);
 });

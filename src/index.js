@@ -1,13 +1,14 @@
 const express = require("express");
 const url = require("url");
-const bodyParser = require('body-parser');
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
+// const bodyParser = require('body-parser');
+// const urlencodedParser = express.urlencoded({ extended: false });
 // 建立webserver物件
 const app = express(); // 用express的funciton去建立實體 (為什麼不是用new 因為當初設計時就是用func不是class)
 // 在express下 順序很重要!!!
 // require放前面 set route 404
 
 app.set('view engine', 'ejs'); // 設定樣板引擎
+app.use(express.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
 
 app.get('/', (req, res) => {
     // res.send(`<h2>123</h2>`) // 不要和end同時使用
@@ -34,7 +35,7 @@ app.get('/try-qs', (req, res) => {
     res.json(output);
 });
 // 把urlencodedParser當Middleware,為專屬這個route的，先經過他的處理才進去
-app.post('/try-post', urlencodedParser, (req, res) => {
+app.post('/try-post', (req, res) => {
     res.json(req.body);
 });
 

@@ -9,6 +9,7 @@ const app = express(); // 用express的funciton去建立實體 (為什麼不是�
 
 app.set('view engine', 'ejs'); // 設定樣板引擎
 app.use(express.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
+app.use(express.json());
 
 app.get('/', (req, res) => {
     // res.send(`<h2>123</h2>`) // 不要和end同時使用
@@ -33,6 +34,9 @@ app.get('/try-qs', (req, res) => {
     output.urlParts = url.parse(req.url, true);
     // output.urlParts = url.parse("http://localhost:3000/try-qs?a=12&b=bill", true);
     res.json(output);
+});
+app.get('/try-post', (req, res) => {
+    res.render('try-post-form');
 });
 // 把urlencodedParser當Middleware,為專屬這個route的，先經過他的處理才進去
 app.post('/try-post', (req, res) => {

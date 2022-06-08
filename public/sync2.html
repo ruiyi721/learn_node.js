@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="info"></div>
+    <button>click test</button>
+    <button onclick="doAjax()">click</button>
+
+    <script>
+        const info = document.querySelector('#info');
+
+        function doAjax() {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                console.log(xhr.readyState, xhr.status);
+                console.log(xhr.responseText);
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    info.innerHTML = xhr.responseText;
+                }
+            };
+            xhr.open('post', '/try-post', true); // 非同步
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

@@ -40,7 +40,7 @@ app.get('/try-post', (req, res) => {
 });
 // 把urlencodedParser當Middleware,為專屬這個route的，先經過他的處理才進去
 app.post('/try-post', (req, res) => {
-    res.json(req.body);
+    res.json(req.body); // 如果route裡不回應 狀態就會一直pending
 });
 
 // app.get('/a.html', (req, res) => {

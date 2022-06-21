@@ -1,5 +1,9 @@
 const express = require("express");
 const url = require("url");
+const multer = require('multer');
+const upload = multer({ dest: 'tmp_uploads' });
+const fs = require('fs');
+
 // const bodyParser = require('body-parser');
 // const urlencodedParser = express.urlencoded({ extended: false });
 // 建立webserver物件
@@ -41,6 +45,14 @@ app.get('/try-post', (req, res) => {
 // 把urlencodedParser當Middleware,為專屬這個route的，先經過他的處理才進去
 app.post('/try-post', (req, res) => {
     res.json(req.body); // 如果route裡不回應 狀態就會一直pending
+});
+
+app.post('/try-upload', upload.single('avatar'), (req, res) => {
+    console.log(req.file);
+    if (req.file && req.file.originalname) {
+
+    }
+    res.send('ok');
 });
 
 // app.get('/a.html', (req, res) => {

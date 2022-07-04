@@ -1,7 +1,7 @@
 const express = require("express");
 const url = require("url");
 const multer = require('multer');
-const upload = multer({ dest: 'tmp_uploads' });
+const upload = multer({ dest: 'tmp_uploads' }); // 標的資料夾為何
 const fs = require('fs');
 
 // const bodyParser = require('body-parser');
@@ -50,9 +50,25 @@ app.post('/try-post', (req, res) => {
 app.post('/try-upload', upload.single('avatar'), (req, res) => {
     console.log(req.file);
     if (req.file && req.file.originalname) {
-
+        switch (req.file.mimetype) {
+            case 'image/jpeg':
+            case 'image/png':
+            case 'image/gif':
+                fs.rename(
+                    req.file.path,
+                    './public/img/' + req.file.originalname,
+                    error => {}
+                );
+                break;
+            default:
+                fs.unlink(req.file.path, error => {});
+        }
     }
-    res.send('ok');
+
+    res.json({
+        body: req.body,
+        file: req.file,
+    });
 });
 
 // app.get('/a.html', (req, res) => {

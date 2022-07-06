@@ -1,8 +1,10 @@
+// 原生node無支援import和export語法
 const express = require("express");
 const url = require("url");
 const multer = require('multer');
-const upload = multer({ dest: 'tmp_uploads' }); // 標的資料夾為何
 const fs = require('fs');
+const upload = multer({ dest: 'tmp_uploads' }); // 標的資料夾為何
+const uuid = require('uuid'); // import可用as去改名
 
 // const bodyParser = require('body-parser');
 // const urlencodedParser = express.urlencoded({ extended: false });
@@ -50,18 +52,27 @@ app.post('/try-post', (req, res) => {
 app.post('/try-upload', upload.single('avatar'), (req, res) => {
     console.log(req.file);
     if (req.file && req.file.originalname) {
+        let ext = ''; // 副檔名
         switch (req.file.mimetype) {
             case 'image/jpeg':
-            case 'image/png':
-            case 'image/gif':
-                fs.rename(
-                    req.file.path,
-                    './public/img/' + req.file.originalname,
-                    error => {}
-                );
+                ext = '.jpg';
                 break;
-            default:
-                fs.unlink(req.file.path, error => {});
+            case 'image/png':
+                ext = '.png';
+                break;
+            case 'image/gif':
+                ext = '.gif';
+                break;
+        }
+        if (ext) {
+            filename = uuid.v4() + ext;
+            fs.rename(
+                req.file.path,
+                './public/img/' + filename,
+                error => {}
+            );
+        } else {
+            fs.unlink(req.file.path, error => {});
         }
     }
 

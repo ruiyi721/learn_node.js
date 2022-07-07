@@ -65,7 +65,7 @@ app.post('/try-upload', upload.single('avatar'), (req, res) => {
                 break;
         }
         if (ext) {
-            filename = uuid.v4() + ext;
+            let filename = uuid.v4() + ext;
             fs.rename(
                 req.file.path,
                 './public/img/' + filename,
@@ -81,6 +81,21 @@ app.post('/try-upload', upload.single('avatar'), (req, res) => {
         file: req.file,
     });
 });
+
+app.get('/try-params1/:action?/:id?', (req, res) => {
+    res.json(req.params);
+});
+
+app.get(/^\/mobile\/09\d{2}-?\d{3}-?\d{3}$/, (req, res) => {
+    let m = req.url.slice(8);
+    m = m.split('?')[0];
+    m = m.split('-').join('');
+    res.json({
+        url: m
+    });
+});
+
+require(__dirname + '/admins/admin1')(app);
 
 // app.get('/a.html', (req, res) => {
 //     res.send(`<h2>route / a.html</h2>`)

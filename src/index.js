@@ -96,6 +96,7 @@ app.get(/^\/mobile\/09\d{2}-?\d{3}-?\d{3}$/, (req, res) => {
 });
 
 require(__dirname + '/admins/admin1')(app);
+app.use(require(__dirname + '/admins/admin2')); // 當作Middleware來用
 
 // app.get('/a.html', (req, res) => {
 //     res.send(`<h2>route / a.html</h2>`)

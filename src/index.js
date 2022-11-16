@@ -1,5 +1,6 @@
 // 原生node無支援import和export語法
 const express = require("express");
+express.iamdora = 'Dora';
 const url = require("url");
 const multer = require('multer');
 const fs = require('fs');
@@ -51,6 +52,10 @@ app.post('/try-post', (req, res) => {
 
 app.post('/try-upload', upload.single('avatar'), (req, res) => {
     console.log(req.file);
+    const output = {
+        body: req.body,
+        file: req.file
+    }
     if (req.file && req.file.originalname) {
         let ext = ''; // 副檔名
         switch (req.file.mimetype) {
@@ -66,6 +71,7 @@ app.post('/try-upload', upload.single('avatar'), (req, res) => {
         }
         if (ext) {
             let filename = uuid.v4() + ext;
+            output.newName = filename;
             fs.rename(
                 req.file.path,
                 './public/img/' + filename,
@@ -76,10 +82,7 @@ app.post('/try-upload', upload.single('avatar'), (req, res) => {
         }
     }
 
-    res.json({
-        body: req.body,
-        file: req.file,
-    });
+    res.json(output);
 });
 
 app.get('/try-params1/:action?/:id?', (req, res) => {
@@ -97,6 +100,8 @@ app.get(/^\/mobile\/09\d{2}-?\d{3}-?\d{3}$/, (req, res) => {
 
 require(__dirname + '/admins/admin1')(app);
 app.use(require(__dirname + '/admins/admin2')); // 當作Middleware來用
+// app.use(require(__dirname + '/admins/admin3'));
+app.use('/admin3', require(__dirname + '/admins/admin3')); // 第一個參數如為字串時 可被當成baseUrl
 
 // app.get('/a.html', (req, res) => {
 //     res.send(`<h2>route / a.html</h2>`)

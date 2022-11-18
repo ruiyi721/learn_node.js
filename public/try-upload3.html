@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="doSelectFile()">上傳大頭貼</button>
+    <button onclick="promise()">實作promise</button>
+
+    <input type="file" id="avatar" style="display: none;" onchange="doUpload()">
+    <br />
+
+    <img src="" alt="" id="newimg">
+
+    <script>
+        const avatar = document.querySelector('#avatar');
+        function doSelectFile() {
+            avatar.click(); // 模擬 click 的動作
+        }
+
+        function doUpload() {
+            const fd = new FormData();
+            console.log(avatar);
+            fd.append('avatar', avatar.files[0]);
+            fetch('/try-upload', {
+                method: 'POST',
+                body: fd, // enctype 預設為 multipart/form-data
+            })
+            .then((res) => {
+                return res.json();
+                // 箭頭函式坑，如果不加return 並寫在花括號內 並不會自動判斷是否return,
+                // 花括號作用為多行程式，如果只有一行 可以省略大括號 並且它會自動return
+            })
+            .then((obj) => {
+                console.log(obj);
+                document.querySelector('#newimg').src = '/img/' + obj.newName;
+            });
+        }
+
+        function promise() {
+            return new Promise((resolve, reject) => {
+                const num = Math.random() > 0.5 ? 1 : 0;
+                if (num) {
+                    // return resolve((res) => console.log('有大於5'));
+                    resolve(console.log('有大於5'));
+                } else {
+                    // return reject((fail) => console.log('沒大於5'));
+                    reject(console.log('沒大於5'));
+                }
+            });
+        }
+    </script>
+</body>
+</html>

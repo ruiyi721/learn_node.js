@@ -51,7 +51,6 @@ app.post('/try-post', (req, res) => {
 });
 
 app.post('/try-upload', upload.single('avatar'), (req, res) => {
-    console.log(req.file);
     const output = {
         body: req.body,
         file: req.file
@@ -81,6 +80,7 @@ app.post('/try-upload', upload.single('avatar'), (req, res) => {
             fs.unlink(req.file.path, error => {});
         }
     }
+    console.log(output);
 
     res.json(output);
 });

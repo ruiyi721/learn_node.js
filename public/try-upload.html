@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form name="form1" action="/try-upload" method="post" enctype="multipart/form-data">
+    <form name="form1" onsubmit="return checkForm()">
         <label for="avatar">大頭貼</label>
         <input type="file" name="avatar" id="avatar"><br />
 
@@ -16,5 +16,27 @@
 
         <input type="submit">
     </form>
+    <img src="" alt="" id="newimg">
+
+    <script>
+        function checkForm() {
+            const fd = new FormData(document.form1);
+            fetch('/try-upload', {
+                method: 'POST',
+                body: fd, // enctype 預設為 multipart/form-data
+            })
+            .then((res) => {
+                return res.json();
+                // 箭頭函式坑，如果不加return 並寫在花括號內 並不會自動判斷是否return,
+                // 花括號作用為多行程式，如果只有一行 可以省略大括號 並且它會自動return
+            })
+            .then((obj) => {
+                console.log(obj);
+                document.querySelector('#newimg').src = '/img/' + obj.newName;
+            });
+
+            return false; // 不要讓表單自動送出
+        }
+    </script>
 </body>
 </html>

@@ -21,10 +21,10 @@
             top: 100px;
             border-radius: 50%;
         }
-        #rect2 {
+        .rect2 {
             position: absolute;
-            width: 150px;
-            height: 150px;
+            width: 50px;
+            height: 50px;
             background-color: rgb(83, 191, 141);
             left: 50px;
             top: 50px;
@@ -33,13 +33,23 @@
 </head>
 <body>
     <div id="rect">
+        <div class="rect2"></div>
         <div id="circle">
-            <div id="rect2"></div>
+            <div class="rect2" id="rect2" onclick="console.log('hi')"></div>
         </div>
     </div>
 
     <script>
-        
+        // addEventListener與傳統事件處理器差異
+        // 傳統只能註冊一個，如果寫在SCRIPT則會覆蓋寫在ELEMENT的事件
+        const listener1 = function() {
+            console.log(1);
+        }
+        // 可以註冊多個監聽器,誰先註冊誰先通知
+        rect2.addEventListener('click', listener1);
+        rect2.addEventListener('click', function() {
+            console.log(2);
+        });
     </script>
 </body>
 </html>

@@ -6,6 +6,7 @@ const multer = require('multer');
 const fs = require('fs');
 const upload = multer({ dest: 'tmp_uploads' }); // 標的資料夾為何
 const uuid = require('uuid'); // import可用as去改名
+const session = require('express-session');
 
 // const bodyParser = require('body-parser');
 // const urlencodedParser = express.urlencoded({ extended: false });
@@ -17,6 +18,16 @@ const app = express(); // 用express的funciton去建立實體 (為什麼不是�
 app.set('view engine', 'ejs'); // 設定樣板引擎
 app.use(express.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
 app.use(express.json());
+// session 的機制是建立在 cookie 之上
+app.use(session({
+    // 新用戶沒有使用到 session 物件時不會建立 session 和發送 cookie
+    saveUninitialized: false,
+    resave: false, // 沒變更內容是否強制回存
+    secret: '加密用字串',
+    cookie: {
+        maxAge: 1200000, // 20分鐘，單位毫秒
+    }
+}));
 
 app.get('/', (req, res) => {
     // res.send(`<h2>123</h2>`) // 不要和end同時使用
@@ -102,6 +113,15 @@ require(__dirname + '/admins/admin1')(app);
 app.use(require(__dirname + '/admins/admin2')); // 當作Middleware來用
 // app.use(require(__dirname + '/admins/admin3'));
 app.use('/admin3', require(__dirname + '/admins/admin3')); // 第一個參數如為字串時 可被當成baseUrl
+
+app.get('/try-session', (req, res) => {
+    req.session.my_var = req.session.my_var || 0; // js 的比較運算子 && 只要兩個都為true則丟後面的值 6 && 7 > 7
+    req.session.my_var++;
+    res.json({
+        my_var: req.session.my_var,
+        session: req.session
+    });
+});
 
 // app.get('/a.html', (req, res) => {
 //     res.send(`<h2>route / a.html</h2>`)

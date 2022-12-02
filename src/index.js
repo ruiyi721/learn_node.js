@@ -123,6 +123,8 @@ app.get('/try-session', (req, res) => {
     });
 });
 
+app.use('/member', require(__dirname + '/routes/member'));
+
 // app.get('/a.html', (req, res) => {
 //     res.send(`<h2>route / a.html</h2>`)
 // });

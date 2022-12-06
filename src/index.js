@@ -29,6 +29,16 @@ app.use(session({
     }
 }));
 
+app.use((req, res, next) => {
+    // 把 session 的資料放到 locals 裡，用來傳給樣板 ejs
+    if(req.session.loginUser) {
+        res.locals.loginUser = req.session.loginUser;
+    } else {
+        res.locals.loginUser = {};
+    }
+    next();
+});
+
 app.get('/', (req, res) => {
     // res.send(`<h2>123</h2>`) // 不要和end同時使用
     // 不能同時下send又render
@@ -124,6 +134,9 @@ app.get('/try-session', (req, res) => {
 });
 
 app.use('/member', require(__dirname + '/routes/member'));
+app.get('/sess', (req, res) => {
+    res.json(req.session);
+});
 
 // app.get('/a.html', (req, res) => {
 //     res.send(`<h2>route / a.html</h2>`)

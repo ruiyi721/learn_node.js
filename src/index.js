@@ -25,7 +25,7 @@ app.use(session({
     resave: false, // 沒變更內容是否強制回存
     secret: '加密用字串',
     cookie: {
-        maxAge: 1200000, // 20分鐘，單位毫秒
+        maxAge: 1200000, // 20分鐘，單位毫秒,session的存活時間
     }
 }));
 
@@ -125,7 +125,7 @@ app.use(require(__dirname + '/admins/admin2')); // 當作Middleware來用
 app.use('/admin3', require(__dirname + '/admins/admin3')); // 第一個參數如為字串時 可被當成baseUrl
 
 app.get('/try-session', (req, res) => {
-    req.session.my_var = req.session.my_var || 0; // js 的比較運算子 && 只要兩個都為true則丟後面的值 6 && 7 > 7
+    req.session.my_var = req.session.my_var || 0; // js 的比較運算子 && 只要兩個都為true則丟後面的值 6 && 7 // 7
     req.session.my_var++;
     res.json({
         my_var: req.session.my_var,

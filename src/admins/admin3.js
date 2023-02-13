@@ -9,7 +9,7 @@ router.use((req, res, next) => {
         name: 'dora',
         age: 30
     };
-    next();
+    next(); // 呼叫才能進到其他router裡面去做判斷
 });
 
 router.get('/:action?/:id?', (req, res) => {

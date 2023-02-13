@@ -24,7 +24,7 @@
                 method: 'POST',
                 body: JSON.stringify(output),
                 headers: {
-                    'Content-Type': 'application/json' // 告訴後端送出的格式為json
+                    'Content-Type': 'application/json' // 告訴後端送出的格式為json,如果不加後端會以為是urlencode
                 }
             })
             .then(r => r.json())

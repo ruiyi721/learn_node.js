@@ -138,6 +138,10 @@ app.get('/sess', (req, res) => {
     res.json(req.session);
 });
 
+app.get('try-moment', (req, res) => {
+    const fm = "";
+});
+
 // app.get('/a.html', (req, res) => {
 //     res.send(`<h2>route / a.html</h2>`)
 // });

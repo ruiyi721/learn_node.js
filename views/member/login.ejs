@@ -30,6 +30,11 @@
             .then(r => r.json())
             .then(obj => {
                 console.log(obj);
+                if(obj.success) {
+                    location.href = '/';
+                } else {
+                    alert(obj.error);
+                }
             })
 
             return false; // 不要讓表單送出

@@ -5,7 +5,7 @@ router.get('/login', (req, res) => {
 
     res.render('member/login');
 });
-
+// 在寫 api
 router.post('/login', (req, res) => {
     const users = {
         'dora': {
@@ -27,6 +27,7 @@ router.post('/login', (req, res) => {
         // 帳號是對的
         if(req.body.password === users[req.body.account].pw) {
             // 密碼也是對的
+            // session放入值
             req.session.loginUser = {
                 account: req.body.account,
                 nickname: users[req.body.account].nickname
@@ -37,6 +38,11 @@ router.post('/login', (req, res) => {
     }
 
     res.json(output);
+});
+
+router.get('/logout', (req, res) => {
+    delete req.session.loginUser; // 清掉 session 變數
+    res.redirect('/'); // 轉向到別的頁面
 });
 
 module.exports = router;

@@ -7,6 +7,7 @@ const fs = require('fs');
 const upload = multer({ dest: 'tmp_uploads' }); // 標的資料夾為何
 const uuid = require('uuid'); // import可用as去改名
 const session = require('express-session');
+const moment = require('moment-timezone');
 
 // const bodyParser = require('body-parser');
 // const urlencodedParser = express.urlencoded({ extended: false });
@@ -138,8 +139,20 @@ app.get('/sess', (req, res) => {
     res.json(req.session);
 });
 
-app.get('try-moment', (req, res) => {
-    const fm = "";
+app.get('/try-moment', (req, res) => {
+    const fm = "YYYY-MM-DD HH:mm:ss";
+    const m1 = moment(req.session.cookie.expires);
+    const m2 = moment(new Date());
+    const m3 = moment('03/06/19');
+
+    res.json({
+        'local_m1': m1.format(fm),
+        'local_m2': m2.format(fm),
+        'local_m3': m3.format(fm),
+        'london_m1': m1.tz('Europe/London').format(fm),
+        'london_m2': m2.tz('Europe/London').format(fm),
+        'london_m3': m3.tz('Europe/London').format(fm),
+    });
 });
 
 // app.get('/a.html', (req, res) => {

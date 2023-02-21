@@ -8,6 +8,7 @@ const upload = multer({ dest: 'tmp_uploads' }); // 標的資料夾為何
 const uuid = require('uuid'); // import可用as去改名
 const session = require('express-session');
 const moment = require('moment-timezone');
+const db = require(__dirname + '/db_connect');
 
 // const bodyParser = require('body-parser');
 // const urlencodedParser = express.urlencoded({ extended: false });
@@ -153,6 +154,29 @@ app.get('/try-moment', (req, res) => {
         'london_m2': m2.tz('Europe/London').format(fm),
         'london_m3': m3.tz('Europe/London').format(fm),
     });
+});
+
+app.get('/try-db', (req, res) => {
+    /*
+    const sql = "SELECT * FROM address_book LIMIT 3";
+    db.query(sql, (error, results, fields) => {
+        if(error) {
+            console.log(error);
+        } else {
+            console.log(fields);
+            res.json(results);
+        }
+    })
+    */
+    const sql = "UPDATE `address_book` SET `name`=?, email=? WHERE sid=2 ";
+    db.query(sql, ['陳小華', '456@gmail.com'], (error, results, fields) => {
+        if(error) {
+            console.log(error);
+        } else {
+            console.log(fields);
+            res.json(results); // 如果用UPDATE 會拿到一個描述結果的物件
+        }
+    })
 });
 
 // app.get('/a.html', (req, res) => {

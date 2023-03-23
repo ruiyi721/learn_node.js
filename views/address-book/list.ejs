@@ -1,0 +1,59 @@
+<%- include('../parts/html-head') %>
+<%- include('../parts/navbar') %>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <% for(let i = 1; i <= totalPage; i++) { 
+                            let active = '';
+                            if(i===page) {
+                                active = 'active';
+                            }
+                        %>
+                        <li class="page-item <%= active %>">
+                            <a class="page-link" href="/address-book/<%= i %>" ><%= i %></a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">電子郵件</th>
+                    <th scope="col">手機</th>
+                    <th scope="col">生日</th>
+                    <th scope="col">住址</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let item of rows) { %>
+                    <tr>
+                        <td>
+                            <%= item.sid %>
+                        </td>
+                        <td>
+                            <%= item.name %>
+                        </td>
+                        <td>
+                            <%= item.email %>
+                        </td>
+                        <td>
+                            <%= item.mobile %>
+                        </td>
+                        <td>
+                            <%= item.birthday %>
+                        </td>
+                        <td>
+                            <%= item.address %>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+    </div>
+<%- include('../parts/html-foot') %>

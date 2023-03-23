@@ -1,0 +1,42 @@
+<%- include('../parts/html-head') %>
+<%- include('../parts/navbar') %>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 50%;">
+                <div class="card-body">
+                  <h5 class="card-title">新增通訊資料</h5>
+                  <form name="form1" onsubmit="return formCheck()">
+                    <div class="form-group">
+                      <label for="name">name</label>
+                      <input type="text" class="form-control" id="name" name="name">
+                      <small id="emailHelp" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email address</label>
+                      <input type="text" class="form-control" id="email" name="email">
+                      <small id="emailHelp" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                      <label for="mobile">mobile</label>
+                      <input type="text" class="form-control" id="mobile" name="mobile">
+                      <small id="emailHelp" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                      <label for="birthday">birthday</label>
+                      <input type="text" class="form-control" id="birthday" name="birthday">
+                      <small id="emailHelp" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                      <label for="address">address</label>
+                      <input type="text" class="form-control" id="address" name="address">
+                      <small id="emailHelp" class="form-text text-muted"></small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../parts/html-foot') %>

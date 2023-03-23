@@ -13,6 +13,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="/sess">查看 session</a>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="/address-book" role="button" data-toggle="dropdown" aria-expanded="false">
+                  address-book
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/address-book">list</a>
+                  <a class="dropdown-item" href="/address-book/add">add</a>
+                </div>
+            </li>
         </ul>
         <ul class="navbar-nav">
             <% if(locals.loginUser && locals.loginUser.account) { %>

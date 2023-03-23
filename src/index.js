@@ -58,12 +58,10 @@ app.get('/sales-json', (req, res) => {
 });
 
 app.get('/try-qs', (req, res) => {
-    const output = {
-        url: req.url
-    };
-    output.urlParts = url.parse(req.url, true);
     // output.urlParts = url.parse("http://localhost:3000/try-qs?a=12&b=bill", true);
-    res.json(output);
+    // http://localhost:3000/try-qs?a[]=12&a[]=bill
+    // http://localhost:3000/try-qs?a[age]=12&a[name]=bill
+    res.json(req.query);
 });
 app.get('/try-post', (req, res) => {
     res.render('try-post-form');
@@ -157,7 +155,6 @@ app.get('/try-moment', (req, res) => {
 });
 
 app.get('/try-db', (req, res) => {
-    /*
     const sql = "SELECT * FROM address_book LIMIT 3";
     db.query(sql, (error, results, fields) => {
         if(error) {
@@ -167,17 +164,26 @@ app.get('/try-db', (req, res) => {
             res.json(results);
         }
     })
-    */
-    const sql = "UPDATE `address_book` SET `name`=?, email=? WHERE sid=2 ";
-    db.query(sql, ['陳小華', '456@gmail.com'], (error, results, fields) => {
-        if(error) {
-            console.log(error);
-        } else {
-            console.log(fields);
-            res.json(results); // 如果用UPDATE 會拿到一個描述結果的物件
-        }
-    })
+    // const sql = "UPDATE `address_book` SET `name`=?, email=? WHERE sid=2 ";
+    // db.query(sql, ['陳小華', '456@gmail.com'], (error, results, fields) => {
+    //     if(error) {
+    //         console.log(error);
+    //     } else {
+    //         console.log(fields);
+    //         res.json(results); // 如果用UPDATE 會拿到一個描述結果的物件
+    //     }
+    // })
+    // const sql = "INSERT INTO `address_book` (name, email, mobile, birthday, address, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+    // db.query(sql, ['山姆', '789@gmail.com', '2988888888', '1991-01-03', '台中', '2013-03-10'], (error, results) => {
+    //     if(error) {
+    //         console.log(error);
+    //     } else {
+    //         res.json(results);
+    //     }
+    // })
 });
+
+app.use('/address-book', require(__dirname + '/routes/address_book'));
 
 // app.get('/a.html', (req, res) => {
 //     res.send(`<h2>route / a.html</h2>`)
